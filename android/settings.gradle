@@ -1,0 +1,3 @@
+rootProject.name = 'RNVideoLayout'
+
+include ':app'
