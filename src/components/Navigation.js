@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import { View, Image } from 'react-native';
-const play = require('./asset/icon/play-button.png');
+import { View, Image, TouchableHighlight } from 'react-native';
+
 const sound = require('./asset/icon/speaker.png');
 const hd = require('./asset/icon/hd-sign.png');
+const play = require('./asset/icon/play-button.png');
+const pause = require('./asset/icon/pause.png');
 
 class Navigation extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      play: false
+    }
+  }
+
+  _onPressButton() {
+    this.setState({play: !this.state.play})
+  }
+
   render() {
     const { container, icon, progress, progressBar } = styles;
+    const iconStatus = this.state.play ? pause : play;
     return(
       <View style={container}>
-        <Image
-          source={play}
-          style={icon}
-        />
+        <TouchableHighlight
+          onPress={() => this._onPressButton()}
+          underlayColor='transparent'
+        >
+          <Image
+            source={iconStatus}
+            style={icon}
+          />
+        </TouchableHighlight>
         <Image
           source={sound}
           style={icon}
@@ -38,7 +57,11 @@ const styles = {
     padding: 20,
     backgroundColor: '#202020',
     flexDirection: 'row',
-    borderRadius: 5
+    borderRadius: 5,
+    shadowOffset: {width: 0, height: 5},
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    elevation: 5
   },
   icon: {
     tintColor: '#fff',
